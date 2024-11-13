@@ -14,7 +14,7 @@ async function checkEmail(email) {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return null;
   }
 }
