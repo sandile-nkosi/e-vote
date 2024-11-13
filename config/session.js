@@ -1,19 +1,16 @@
-const expressSession = require('express-session');
-const mongoDbStore = require('connect-mongodb-session');
+const expressSession = require("express-session");
+const mongoDbStore = require("connect-mongodb-session");
 
-
-function createSessionStore () {
-  const MongoDBStore  = mongoDbStore(expressSession);
-
+function createSessionStore() {
+  const MongoDBStore = mongoDbStore(expressSession);
 
   const store = new MongoDBStore({
     uri: process.env.MONGOOSE_URI,
-    collection: 'sessions'
+    collection: "sessions",
   });
 
   return store;
 }
-
 
 function createSessionConfig() {
   return {
@@ -22,10 +19,9 @@ function createSessionConfig() {
     saveUninitialized: false,
     store: createSessionStore(),
     cookie: {
-      maxAge: 0.5 * 24 * 60 * 60
-    }
+      maxAge: 1 * 60 * 60 * 1000,
+    },
   };
 }
-
 
 module.exports = createSessionConfig;
