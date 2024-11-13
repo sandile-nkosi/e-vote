@@ -1,26 +1,64 @@
 const Voter = require("../models/Voter");
 const validationUtil = require("../util/validation");
 const authenticationUtil = require("../util/authentication");
+const sessionFlash = require("../util/session-flash");
 const checkEmail = require("../middleware/check-email");
 
 // get controllers
 function getLogin(req, res) {
-  res.render("voter/login");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      password: "",
+    };
+  }
+  res.render("voter/login", { sessionData });
 }
 
 function getRegister(req, res) {
-  res.render("voter/register");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      confirmEmail: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      idNumber: "",
+      street: "",
+      city: "",
+      postalCode: "",
+      province: "",
+    };
+  }
+  res.render("voter/register", { sessionData });
 }
 
 //post controllers
 
 //login
 async function login(req, res) {
-  const { email, password } = req.body;
+  const enteredData = ({ email, password } = req.body);
   let voter;
 
   try {
     voter = await Voter.findOne({ email: email });
+    if (!voter) {
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          errorMessage: "Voter does not exist - please register",
+        },
+        () => {
+          res.status(401).redirect("/api/voter/login");
+        }
+      );
+      return;
+    }
+    
   } catch (error) {
     next(error);
     return;
@@ -32,8 +70,17 @@ async function login(req, res) {
       res.redirect("/");
     });
   } else {
-    res.status(401).redirect("/api/voter/login");
-    console.log("Invalid Email or Password");
+    sessionFlash.flashDataToSession(
+      req,
+      {
+        errorMessage:
+          "Invalid Email or Password - please double check your credentials!",
+        ...enteredData,
+      },
+      () => {
+        res.status(401).redirect("/api/voter/login");
+      }
+    );
   }
 }
 
@@ -48,7 +95,7 @@ async function register(req, res) {
   let emailStatus;
   let existingVoter;
 
-  const {
+  const enteredData = ({
     email,
     confirmEmail,
     password,
@@ -59,7 +106,7 @@ async function register(req, res) {
     city,
     postalCode,
     province,
-  } = req.body;
+  } = req.body);
 
   if (
     !validationUtil.voterDetailsValid(
@@ -75,15 +122,34 @@ async function register(req, res) {
     ) ||
     !validationUtil.emailMatch(email, confirmEmail)
   ) {
-    res.redirect("/api/voter/register");
+    sessionFlash.flashDataToSession(
+      req,
+      {
+        errorMessage:
+          "Please check your input. Emails must match. Password must be at least 6 characters long, postal code must be 4 characters long.",
+        ...enteredData,
+      },
+      () => {
+        res.redirect("/api/voter/register");
+      }
+    );
     return;
   }
 
   try {
     emailStatus = await checkEmail(email);
     if (emailStatus.disposable) {
-      console.log("Email Address not allowed - please use a different one");
-      return res.status(401).redirect("/api/voter/register");
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          errorMessage:
+            "Email Address not allowed - please use a different one",
+          ...enteredData,
+        },
+        () => {
+          res.status(401).redirect("/api/voter/register");
+        }
+      );
     }
   } catch (error) {
     next(error);
@@ -94,19 +160,19 @@ async function register(req, res) {
     existingVoter = await Voter.findOne({ email: email });
 
     if (existingVoter) {
-      console.log("Voter Already exists");
-      return res.status(400).redirect("/api/voter/register");
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          errorMessage: "Voter Already exists",
+          ...enteredData,
+        },
+        () => {
+          res.status(400).redirect("/api/voter/register");
+        }
+      );
     } else {
       const voter = await Voter.create({
-        email,
-        password,
-        firstName,
-        lastName,
-        idNumber,
-        street,
-        city,
-        postalCode,
-        province,
+        ...enteredData,
       });
 
       if (voter) {

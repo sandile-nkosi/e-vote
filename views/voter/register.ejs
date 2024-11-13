@@ -5,14 +5,20 @@
 <body>
   <main>
     <h1>Register to Vote</h1>
+    <% if(sessionData.errorMessage) {%>
+      <section class="alert">
+        <h2>Invalid Input</h2>
+        <p><%= sessionData.errorMessage %></p>
+      </section>
+    <% } %>
     <form action="/api/voter/register" method="post">
       <p>
         <label for="email">E-Mail</label>
-        <input type="email" id="email" name="email" required />
+        <input type="email" id="email" name="email" value="<%= sessionData.email %>" required />
       </p>
       <p>
         <label for="confirmEmail">Confirm E-Mail</label>
-        <input type="email" id="confirmEmail" name="confirmEmail" required />
+        <input type="email" id="confirmEmail" name="confirmEmail" value="<%= sessionData.confirmEmail %>" required />
       </p>
       <p>
         <label for="password">Password</label>
@@ -20,30 +26,31 @@
           type="password"
           id="id-number"
           name="password"
-          minlength="6"
+          minlength="6" value="<%= sessionData.password %>"
           required
         />
       </p>
       <hr />
       <p>
         <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="firstName" required />
+        <input type="text" id="firstName" name="firstName" value="<%= sessionData.firstName %>" required />
       </p>
       <p>
         <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="lastName" required />
+        <input type="text" id="lastName" name="lastName" value="<%= sessionData.lastName %>" required />
       </p>
       <p>
         <label for="idNumber">ID Number</label>
-        <input type="text" id="idNumber" name="idNumber" required />
+        <input type="text" id="idNumber" name="idNumber" value="<%= sessionData.idNumber %>" required />
       </p>
+      <hr />
       <p>
         <label for="street">Street</label>
-        <input type="text" id="street" name="street" required />
+        <input type="text" id="street" name="street" value="<%= sessionData.street %>" required />
       </p>
       <p>
         <label for="city">City</label>
-        <input type="text" id="city" name="city" required />
+        <input type="text" id="city" name="city" value="<%= sessionData.city %>" required />
       </p>
       <p>
         <label for="postalCode">Postal Code</label>
@@ -52,13 +59,14 @@
           id="postalCode"
           name="postalCode"
           minlength="4"
-          maxlength="4"
+          maxlength="4" value="<%= sessionData.postalCode %>"
           required
         />
       </p>
       <p>
         <label for="province">Province</label>
         <select name="province" id="province">
+          <option value="" selected disabled hidden>Select Province</option>
           <option value="Eastern Cape">Eastern Cape</option>
           <option value="Free State">Free State</option>
           <option value="Gauteng">Gauteng</option>
