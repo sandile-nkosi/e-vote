@@ -1,0 +1,64 @@
+<%- include('../shared/partials/head', { pageTitle: 'Voter Registration' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/voter.css">
+</head>
+<body>
+  <main>
+    <h1>Register to Vote</h1>
+    <form action="/api/voter/register" method="post">
+      <p>
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" name="email" required />
+      </p>
+      <p>
+        <label for="confirmEmail">Confirm E-Mail</label>
+        <input type="email" id="confirmEmail" name="confirmEmail" required />
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="id-number"
+          name="password"
+          minlength="6"
+          required
+        />
+      </p>
+      <hr />
+      <p>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" required />
+      </p>
+      <p>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required />
+      </p>
+      <p>
+        <label for="idNumber">ID Number</label>
+        <input type="text" id="idNumber" name="idNumber" required />
+      </p>
+      <p>
+        <label for="street">Street</label>
+        <input type="text" id="street" name="street" required />
+      </p>
+      <p>
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" required />
+      </p>
+      <p>
+        <label for="postal">Postal Code</label>
+        <input
+          type="text"
+          id="postal"
+          name="postal"
+          minlength="4"
+          maxlength="4"
+          required
+        />
+      </p>
+      <button class="btn">Register</button>
+      <p id="switch-form"><a href="/api/voter/login">Login instead</a></p>
+    </form>
+  </main>
+
+  <%- include('../shared/partials/footer') %>

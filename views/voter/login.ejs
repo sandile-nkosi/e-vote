@@ -1,0 +1,26 @@
+<%- include('../shared/partials/head', { pageTitle: 'Voter Login' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/voter.css">
+</head>
+<body>
+  <main>
+    <h1>Login In</h1>
+    <form action="/api/voter/login" method="post">
+      <p>
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" name="email" required />
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="id-number"
+          name="password"
+          minlength="6"
+          required
+        />
+      </p>
+      <button class="btn">Login</button>
+    </form>
+  </main>
+<%- include('../shared/partials/footer') %>
