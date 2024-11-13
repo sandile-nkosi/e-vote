@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const provinces = [
+  "Eastern Cape",
+  "Free State",
+  "Gauteng",
+  "KwaZulu-Natal",
+  "Limpopo",
+  "Mpumalanga",
+  "Northern Cape",
+  "North West",
+  "Western Cape",
+];
 
 const voterSchema = mongoose.Schema(
   {
@@ -21,6 +32,23 @@ const voterSchema = mongoose.Schema(
     },
     idNumber: {
       type: String,
+      required: true,
+    },
+    street: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    postalCode: {
+      type: String,
+      required: true,
+    },
+    province: {
+      type: String,
+      enum: provinces,
       required: true,
     },
     isAdmin: {

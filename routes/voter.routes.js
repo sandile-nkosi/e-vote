@@ -10,6 +10,9 @@ voterRouter.get("/register", voterController.getRegister);
 // post routes
 voterRouter.post("/login", voterController.login);
 
+voterRouter.post("/logout", voterController.logout);
+
 voterRouter.post("/register", voterController.register);
+
 
 module.exports = voterRouter;

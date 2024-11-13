@@ -4,7 +4,9 @@
     <ul>
       <% if (locals.isAuth) {%>
       <li>
-        <button>Logout</button>
+        <form action="/api/voter/logout" method="post">
+          <button>Logout</button>
+        </form>
       </li>
       <% } %>
     </ul>

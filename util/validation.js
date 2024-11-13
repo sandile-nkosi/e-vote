@@ -16,7 +16,8 @@ function voterDetailsValid(
   idNumber,
   street,
   city,
-  postal
+  postalCode,
+  province
 ) {
   return (
     voterCredentialsValid(email, password) &&
@@ -25,7 +26,8 @@ function voterDetailsValid(
     !isEmpty(idNumber) &&
     !isEmpty(street) &&
     !isEmpty(city) &&
-    !isEmpty(postal)
+    !isEmpty(postalCode) &&
+    !isEmpty(province)
   );
 }
 
@@ -34,6 +36,6 @@ function emailMatch(email, confirmEmail) {
 }
 
 module.exports = {
-  voterCredentialsValid,
+  voterDetailsValid,
   emailMatch,
 };
