@@ -14,7 +14,7 @@ function getLogin(req, res) {
       password: "",
     };
   }
-  res.render("voter/login", { sessionData });
+  res.render("auth/login", { sessionData });
 }
 
 function getRegister(req, res) {
@@ -34,7 +34,7 @@ function getRegister(req, res) {
       province: "",
     };
   }
-  res.render("voter/register", { sessionData });
+  res.render("auth/register", { sessionData });
 }
 
 //post controllers

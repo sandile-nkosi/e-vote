@@ -1,0 +1,14 @@
+<ul class="nav-items">
+  <% if (!locals.isAuth) {%>
+    <li><a href="/api/voter/login">Login</a></li>
+    <li><a href="/api/voter/register">Register</a></li>
+    <li><a href="">Comissioner Login</a></li>
+  <% } %> <% if (locals.isAuth) {%>
+  <li><a href="/voter/vote">Vote</a></li>
+  <li>
+    <form action="/api/voter/logout" method="post">
+      <button>Logout</button>
+    </form>
+  </li>
+  <% } %>
+</ul>

@@ -1,5 +1,5 @@
 const express = require("express");
-const voterController = require("../controllers/voter.controller");
+const voterController = require("../controllers/auth.controller");
 const voterRouter = express.Router();
 
 //get routes

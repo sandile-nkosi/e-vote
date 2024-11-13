@@ -4,7 +4,8 @@ const db = require("./config/database");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
-const voterRoutes = require("./routes/voter.routes");
+const voterRoutes = require("./routes/auth.routes");
+const voteRoutes = require("./routes/vote.routes");
 const sharedRoutes = require("./routes/shared.routes");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const checkAuthStatusMiddleware = require("./middleware/check-auth");
@@ -27,6 +28,9 @@ app.use("/", sharedRoutes);
 
 //voter routes
 app.use("/api/voter", voterRoutes);
+
+//vote routes
+app.use("/voter", voteRoutes);
 
 //error handler
 app.use(errorHandlerMiddleware);
