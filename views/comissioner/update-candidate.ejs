@@ -1,0 +1,9 @@
+<%- include('../shared/partials/head', { pageTitle: 'Update Candidate' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+</head>
+<body>
+  <main>
+    <h1>Update Candidate</h1>
+    <%- include('../shared/partials/candidate-form', { submitPath: "/api/comissioner/candidates/update/" + candidate._id, candidate, imageRequired: false }) %>
+  </main>
+<%- include('../shared/partials/footer') %>

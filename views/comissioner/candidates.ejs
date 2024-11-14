@@ -1,0 +1,23 @@
+<%- include('../shared/partials/head', { pageTitle: 'Candidates' }) %>
+<link rel="stylesheet" href="/styles/candidates.css">
+<script src="/scripts/candidate-management.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Candidate Administration</h1>
+    <section>
+      <h2>Manage Candidates </h2>
+      <p><a href="/api/comissioner/candidates/new" class="btn">Add Candidate</a></p>
+    </section>
+    <section>
+      <ul id="candidates-grid">
+        <% for (const candidate of candidates) {%>
+          <li>
+            <%- include('../shared/partials/candidate-item', { candidate }) %>
+          </li>
+        <% } %>
+      </ul>
+    </section>
+  </main>
+<%- include('../shared/partials/footer') %>

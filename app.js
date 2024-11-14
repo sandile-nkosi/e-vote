@@ -4,6 +4,7 @@ const db = require("./config/database");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
+const comissionerRoutes = require("./routes/comissioner.routes");
 const voterRoutes = require("./routes/auth.routes");
 const voteRoutes = require("./routes/vote.routes");
 const sharedRoutes = require("./routes/shared.routes");
@@ -16,6 +17,7 @@ const createSessionConfig = require("./config/session")
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
+app.use("/candidates/assets", express.static("candidate-data"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -25,6 +27,9 @@ app.use(checkAuthStatusMiddleware);
 
 //shared routes
 app.use("/", sharedRoutes);
+
+//comissioner routes
+app.use("/api/comissioner", comissionerRoutes);
 
 //voter routes
 app.use("/api/voter", voterRoutes);

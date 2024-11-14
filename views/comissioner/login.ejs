@@ -1,0 +1,32 @@
+<%- include('../shared/partials/head', { pageTitle: 'Comissioner Login' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+<link rel="stylesheet" href="/styles/voter.css">
+</head>
+<body>
+  <main>
+    <h1>Comissioner Login In</h1>
+    <% if(sessionData.errorMessage) {%>
+      <section class="alert">
+        <h2>Invalid Credentials</h2>
+        <p><%= sessionData.errorMessage %></p>
+      </section>
+    <% } %>
+    <form action="/api/comissioner/login" method="post">
+      <p>
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" name="email" value="<%= sessionData.email %>" required />
+      </p>
+      <p>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="id-number"
+          name="password"
+          minlength="6" value="<%= sessionData.password %>"
+          required
+        />
+      </p>
+      <button class="btn">Login</button>
+    </form>
+  </main>
+<%- include('../shared/partials/footer') %>

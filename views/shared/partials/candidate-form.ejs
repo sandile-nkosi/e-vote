@@ -1,0 +1,22 @@
+<form action="<%= submitPath %>" method="post" enctype="multipart/form-data">
+  <p>
+    <label for="fullName">Candidate Name</label>
+    <input type="text" id="fullName" name="fullName" value="<%= candidate.fullName %>" required>
+  </p>
+  <p>
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" accept="image/png,image/jpg" <% if (imageRequired) {%>required<% }%>>
+  </p>
+  <p>
+    <label for="politicalParty">Political Party</label>
+    <input type="text" id="politicalParty" name="politicalParty" value="<%= candidate.politicalParty %>" required>
+  </p>
+  <p>
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="7" required><%= candidate.description %></textarea>
+  </p>
+  <p>
+    <button type="reset" class="btn btn-alt">Reset</button>
+    <button class="btn">Save</button>
+  </p>
+</form>

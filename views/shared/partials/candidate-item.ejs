@@ -1,0 +1,11 @@
+<article class="candidate-item">
+  <img src="<%= candidate.imageUrl %>" alt="<%= candidate.fullName %>">
+  <div class="candidate-item-content">
+    <h2><%= candidate.fullName %></h2>
+    <div class="candidate-item-actions">
+      <a class="btn btn-alt" href="/api/comissioner/candidates/update/<%= candidate._id %>">View & Edit</a>
+      <button class="btn btn-alt" data-candidateid="<%= candidate._id%>" >Delete</button>
+    </div>
+  </div>
+  
+</article>

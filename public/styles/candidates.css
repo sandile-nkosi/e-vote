@@ -1,0 +1,34 @@
+#candidates-grid {
+  margin: var(--space-8) auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-4);
+}
+
+.candidate-item{
+  border-radius: var(--border-radius-medium);
+  text-align: center;
+  background-color: var(--color-gray-600);
+  overflow: hidden;
+}
+
+.candidate-item img {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.candidate-item-content {
+  padding: var(--space-4);
+}
+
+.candidate-item-content h2 {
+  font-size: 1.15rem;
+  margin: var(--space-2) 0;
+}
+
+.candidate-item-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}

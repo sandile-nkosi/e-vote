@@ -8,7 +8,19 @@ function destroyVoterAuthSession(req) {
   req.session.uid = null;
 }
 
+function createComissionerSession(req, comissioner, action) {
+  req.session.uid = comissioner._id.toString();
+  req.session.isAdmin = comissioner.isAdmin;
+  req.session.save(action);
+}
+
+function destroyComissionerAuthSession(req) {
+  req.session.uid = null;
+}
+
 module.exports = {
   createVoterSession,
   destroyVoterAuthSession,
+  createComissionerSession,
+  destroyComissionerAuthSession
 };
