@@ -35,6 +35,7 @@ async function getUpdateCandidate(req, res, next) {
     const candidate = await Candidate.findById(req.params.id).exec();
     res.render("comissioner/update-candidate", { candidate });
   } catch (error) {
+    error.code = 404;
     next(error);
   }
 }
@@ -59,7 +60,7 @@ async function login(req, res) {
           errorMessage: "Comissioner does not exist - please register",
         },
         () => {
-          res.status(401).redirect("/api/comissioner/login");
+          res.status(404).redirect("/api/comissioner/login");
         }
       );
       return;
@@ -161,6 +162,7 @@ async function updateCandidate(req, res, next) {
     );
     res.status(201).redirect("/api/comissioner/candidates");
   } catch (error) {
+    error.code = 404;
     next(error);
     return;
   }
@@ -173,6 +175,7 @@ async function deleteCandidate(req, res, next) {
     });
     res.status(201).json({ message: "Deleted candidate!"})
   } catch (error) {
+    error.code = 404;
     next(error);
   }
 }

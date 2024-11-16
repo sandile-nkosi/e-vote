@@ -6,6 +6,7 @@ function createVoterSession(req, voter, action) {
 
 function destroyVoterAuthSession(req) {
   req.session.uid = null;
+  req.session.isAdmin = null;
 }
 
 function createComissionerSession(req, comissioner, action) {
@@ -16,6 +17,7 @@ function createComissionerSession(req, comissioner, action) {
 
 function destroyComissionerAuthSession(req) {
   req.session.uid = null;
+  req.session.isAdmin = null;
 }
 
 module.exports = {

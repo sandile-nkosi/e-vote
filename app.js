@@ -10,9 +10,9 @@ const voteRoutes = require("./routes/vote.routes");
 const sharedRoutes = require("./routes/shared.routes");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const checkAuthStatusMiddleware = require("./middleware/check-auth");
-const session = require('express-session');
-const createSessionConfig = require("./config/session")
-
+const protectRoutesMiddleware = require("./middleware/protect-routes");
+const session = require("express-session");
+const createSessionConfig = require("./config/session");
 
 app.set("view engine", "ejs");
 
@@ -20,9 +20,9 @@ app.use(express.static("public"));
 app.use("/candidates/assets", express.static("candidate-data"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-app.use(session(createSessionConfig()))
+app.use(session(createSessionConfig()));
 app.use(checkAuthStatusMiddleware);
+
 //routes
 
 //shared routes

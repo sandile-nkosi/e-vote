@@ -18,6 +18,7 @@
   object-fit: cover;
 }
 
+
 .candidate-item-content {
   padding: var(--space-4);
 }
@@ -27,8 +28,66 @@
   margin: var(--space-2) 0;
 }
 
+.candidate-item-content h3 {
+  font-size: 1rem;
+  margin: var(--space-2) 0;
+}
+
+.candidate-item-content p {
+  font-size: 0.95rem;
+  margin: var(--space-2) 0;
+}
+
 .candidate-item-actions {
   display: flex;
+  flex-direction: column;
   gap: var(--space-2);
   margin-top: var(--space-4);
+  justify-content: center;
+}
+
+form hr {
+  border-color: var(--color-primary-200);
+  margin: var(--space-4);
+}
+
+#candidate-details header {
+  margin-top: var(--space-8);
+  padding: var(--space-8);
+  background-color: var(--color-gray-600);
+  gap: var(--space-8);
+}
+
+#candidate-details img {
+  width: 100%;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: var(--border-radius-medium);
+  border: 1px solid var(--color-gray-100);
+}
+
+#candidate-info {
+  text-align: center;
+}
+
+#candidate-description {
+  background-color: var(--color-primary-500-bg);
+  padding: var(--space-8);
+  white-space: pre-wrap;
+}
+
+@media (min-width: 48rem) {
+  #candidate-details header {
+    display: flex;
+  }
+
+  #candidate-details img {
+    width: 20rem;
+    height: 15rem;
+    margin: var(--space-8);
+  }
+
+  #candidate-info {
+    text-align: left;
+  }
 }

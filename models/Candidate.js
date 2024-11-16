@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const defualtVotes = 0;
 
 const candidateSchema = mongoose.Schema(
   {
@@ -26,16 +25,6 @@ const candidateSchema = mongoose.Schema(
     description: {
       type: String,
       required: true,
-    },
-    nationalVotes: {
-      type: Number,
-      required: true,
-      default: defualtVotes,
-    },
-    provincialVotes: {
-      type: Number,
-      required: true,
-      default: defualtVotes,
     },
   },
   {

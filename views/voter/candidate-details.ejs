@@ -1,0 +1,18 @@
+<%- include('../shared/partials/head', { pageTitle: 'Candidate Manifesto' }) %>
+<link rel="stylesheet" href="/styles/candidates.css">
+</head>
+<body>
+  <main id="candidate-details">
+    <header>
+      <img src="<%= candidate.imageUrl %>" alt="<%= candidate.fullName %>">
+      <div id="candidate-info">
+        <h1><%= candidate.fullName %></h1>
+        <p><%= candidate.politicalParty %></p>
+      </div>
+    </header>
+    <p id="candidate-description"><%= candidate.description %></p>
+    <p>
+      <a class="btn btn-alt" href="/voter/vote">BACK</a>
+    </p>
+  </main>
+<%- include('../shared/partials/footer') %>

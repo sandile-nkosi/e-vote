@@ -1,8 +1,15 @@
 <%- include('../shared/partials/head', { pageTitle: 'E-Vote' }) %>
+<link rel="stylesheet" href="/styles/candidates.css">
 </head>
 <body>
   <main>
     <h1>All Candidates</h1>
-    <p>A list of all candidates...</p>
+    <ul id="candidates-grid">
+      <% for (const candidate of candidates) {%>
+      <li>
+        <%- include('../shared/partials/candidate-item', { candidate, voter }) %>
+      </li>
+    <% } %>
+    </ul>
   </main>
 <%- include('../shared/partials/footer') %>

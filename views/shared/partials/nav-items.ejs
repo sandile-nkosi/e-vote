@@ -1,5 +1,6 @@
 <ul class="nav-items">
   <% if (!locals.isAuth) {%>
+  <li><a href="/voter/vote">Vote</a></li>
   <li><a href="/api/voter/login">Login</a></li>
   <li><a href="/api/voter/register">Register</a></li>
   <li><a href="/api/comissioner/login">Comissioner Login</a></li>
@@ -11,8 +12,8 @@
     </form>
   </li>
   <% } %> <% if (locals.isAuth && locals.isAdmin) {%>
-    <li><a href="/api/comissioner/candidates">Manage Candidates</a></li>
-    <li><a href="/api/comissioner/elections">Manage Elections</a></li>
+  <li><a href="/api/comissioner/candidates">Manage Candidates</a></li>
+  <li><a href="/api/comissioner/elections">Manage Elections</a></li>
   <li>
     <form action="/api/comissioner/logout" method="post">
       <button>Logout</button>

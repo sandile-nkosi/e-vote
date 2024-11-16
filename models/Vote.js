@@ -7,9 +7,15 @@ const voteSchema = mongoose.Schema(
       required: true,
       ref: "Voter",
     },
-    vote: {
-      type: String,
-      required: true,
+    nationalVote: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      ref: "Candidate",
+    },
+    provincialVote: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      ref: "Candidate",
     },
   },
   {

@@ -3,8 +3,43 @@
   <div class="candidate-item-content">
     <h2><%= candidate.fullName %></h2>
     <div class="candidate-item-actions">
-      <a class="btn btn-alt" href="/api/comissioner/candidates/update/<%= candidate._id %>">View & Edit</a>
-      <button class="btn btn-alt" data-candidateid="<%= candidate._id%>" >Delete</button>
+      <% if (locals.isAdmin) {%>
+        <a class="btn btn-alt" href="/api/comissioner/candidates/update/<%= candidate._id %>">View & Edit</a>
+        <button class="btn btn-alt" data-candidateid="<%= candidate._id%>" >Delete</button>
+      <% }else { %>
+        <h3><%= candidate.politicalParty %></h3>
+        <p><%= candidate.description %></p>
+        <form action="/voter/vote/<%= candidate._id%>" method="post">
+             <a class="btn btn-alt" href="/voter/candidate/<%= candidate._id %>">View Manifesto</a>
+          <hr>
+          <% if (voter.hasVotedNationally && voter.hasVotedprovincially) {%>
+            <button class="btn" type="submit" disabled>Already Voted</button>
+          <% }else if(voter.hasVotedNationally) {%>
+            <div class="voteType">
+              <h4>Vote type:</h4>
+              <input type="radio" id="provincialVote" name="voteType" value="provincialVote">
+              <label for="provincialVote">Provincial</label>
+            </div>
+            <button class="btn" type="submit">Vote</button>
+          <% }else if(voter.hasVotedprovincially) {%>
+            <div class="voteType">
+              <h4>Vote type:</h4>
+              <input type="radio" id="nationalVote" name="voteType" value="nationalVote">
+              <label for="nationalVote">National</label>
+            </div>
+            <button class="btn" type="submit">Vote</button>
+          <% }else {%>
+            <div class="voteType">
+            <h4>Vote type:</h4>
+            <input type="radio" id="nationalVote" name="voteType" value="nationalVote">
+            <label for="nationalVote">National</label>
+            <input type="radio" id="provincialVote" name="voteType" value="provincialVote">
+            <label for="provincialVote">Provincial</label>
+          </div>
+          <button class="btn" type="submit">Vote</button>
+          <% } %>
+        </form>
+      <% }%>
     </div>
   </div>
   

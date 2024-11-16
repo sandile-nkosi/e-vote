@@ -1,7 +1,21 @@
-<%- include('./partials/head', { pageTitle: 'E-Vote' }) %>
+<%- include('./partials/head', { pageTitle: 'E-Vote Home' }) %>
+<link rel="stylesheet" href="/styles/progress-bar.css">
+<link rel="stylesheet" href="/styles/candidates.css">
 </head>
 <body>
   <main>
     <h1>Candidates and Results</h1>
+    <% if (votesTotal <= 1) {%>
+      <h2>Vote casted: <%= votesTotal %></h2>
+    <% }else { %>
+      <h2>Votes casted: <%= votesTotal %></h2>
+    <% } %>
+    <ul id="candidates-grid">
+      <% for (const candidate of candidates) {%>
+      <li>
+        <%- include('../shared/partials/candidate-item-results', { candidate, votes }) %>
+      </li>
+    <% } %>
+    </ul>
   </main>
 <%- include('./partials/footer') %>

@@ -1,4 +1,5 @@
 const Voter = require("../models/Voter");
+const Vote = require("../models/Vote");
 const validationUtil = require("../util/validation");
 const authenticationUtil = require("../util/authentication");
 const sessionFlash = require("../util/session-flash");
@@ -58,7 +59,6 @@ async function login(req, res) {
       );
       return;
     }
-    
   } catch (error) {
     next(error);
     return;
@@ -176,6 +176,9 @@ async function register(req, res) {
       });
 
       if (voter) {
+        await Vote.create({
+          voter: voter._id,
+        });
         res.status(201).redirect("/api/voter/login");
       } else {
         res.status(400);

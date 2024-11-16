@@ -59,7 +59,11 @@ const voterSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    hasVoted: {
+    hasVotedNationally: {
+      type: Boolean,
+      default: false,
+    },
+    hasVotedprovincially: {
       type: Boolean,
       default: false,
     },
