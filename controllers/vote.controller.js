@@ -21,7 +21,7 @@ async function getCandidate(req, res, next) {
   try {
     const candidate = await Candidate.findById(req.params.id).exec();
 
-    res.render("voter/candidate-details", { candidate })
+    res.render("voter/candidate-details", { candidate });
   } catch (error) {
     next(error);
   }
@@ -52,8 +52,23 @@ async function vote(req, res, next) {
   try {
     const voter = await Voter.findById(voterId).exec();
 
+    //check if vote exists, create if does not
+    const existingVote = await Vote.findOne({ voter: voterId }).exec();
+
+    if (!existingVote) {
+      await Vote.create({
+        voter: voter._id,
+      });
+    }
+
     if (voteType === "nationalVote") {
       await Vote.updateOne({ voter: voterId }, { nationalVote: nationalVote });
+
+      await Candidate.findByIdAndUpdate(
+        nationalVote,
+        { $inc: { nationalVotes: 1 } },
+        { new: true } // This returns the updated document instead of the old one
+      );
 
       await Voter.updateOne({ _id: voterId }, { hasVotedNationally: true });
 
@@ -62,6 +77,12 @@ async function vote(req, res, next) {
       await Vote.updateOne(
         { voter: voterId },
         { provincialVote: provincialVote }
+      );
+
+      await Candidate.findByIdAndUpdate(
+        provincialVote,
+        { $inc: { provincialVotes: 1 } },
+        { new: true } // This returns the updated document instead of the old one
       );
 
       await Voter.updateOne({ _id: voterId }, { hasVotedprovincially: true });

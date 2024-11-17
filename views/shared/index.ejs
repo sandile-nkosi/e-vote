@@ -5,11 +5,7 @@
 <body>
   <main>
     <h1>Candidates and Results</h1>
-    <% if (votesTotal <= 1) {%>
-      <h2>Vote casted: <%= votesTotal %></h2>
-    <% }else { %>
-      <h2>Votes casted: <%= votesTotal %></h2>
-    <% } %>
+      <h2>Votes cast: <%= votesTotal %></h2>
     <ul id="candidates-grid">
       <% for (const candidate of candidates) {%>
       <li>

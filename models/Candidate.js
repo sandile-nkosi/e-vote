@@ -26,6 +26,14 @@ const candidateSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    nationalVotes: {
+      type: Number,
+      default: 0,
+    },
+    provincialVotes: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

@@ -4,8 +4,8 @@
     <h2><%= candidate.fullName %></h2>
     <div class="candidate-item-actions">
         <h3><%= candidate.politicalParty %></h3>
-        <p>National votes: </p>
-        <p>Provincial votes: </p>
+        <p>National votes: <%= candidate.nationalVotes %></p>
+        <p>Provincial votes: <%= candidate.provincialVotes %></p>
         <p>
           <%- include('progress-bar') %>
         </p>

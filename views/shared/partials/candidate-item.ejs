@@ -8,7 +8,6 @@
         <button class="btn btn-alt" data-candidateid="<%= candidate._id%>" >Delete</button>
       <% }else { %>
         <h3><%= candidate.politicalParty %></h3>
-        <p><%= candidate.description %></p>
         <form action="/voter/vote/<%= candidate._id%>" method="post">
              <a class="btn btn-alt" href="/voter/candidate/<%= candidate._id %>">View Manifesto</a>
           <hr>

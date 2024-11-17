@@ -1,5 +1,4 @@
 const Voter = require("../models/Voter");
-const Vote = require("../models/Vote");
 const validationUtil = require("../util/validation");
 const authenticationUtil = require("../util/authentication");
 const sessionFlash = require("../util/session-flash");
@@ -126,7 +125,7 @@ async function register(req, res) {
       req,
       {
         errorMessage:
-          "Please check your input. Emails must match. Password must be at least 6 characters long, postal code must be 4 characters long.",
+          "Please check your input. Emails must match. Disposable emails are not allowed. Password must be at least 6 characters long, ID number must be 13 digits long, postal code must be 4 digits long.",
         ...enteredData,
       },
       () => {
@@ -176,9 +175,6 @@ async function register(req, res) {
       });
 
       if (voter) {
-        await Vote.create({
-          voter: voter._id,
-        });
         res.status(201).redirect("/api/voter/login");
       } else {
         res.status(400);

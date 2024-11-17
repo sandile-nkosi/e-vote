@@ -41,7 +41,7 @@
       </p>
       <p>
         <label for="idNumber">ID Number</label>
-        <input type="text" id="idNumber" name="idNumber" value="<%= sessionData.idNumber %>" required />
+        <input type="text" id="idNumber" name="idNumber" value="<%= sessionData.idNumber %>" required pattern="\d{1,13}" maxlength="13" onkeypress="return /[0-9]/i.test(event.key)" />
       </p>
       <hr />
       <p>
@@ -60,8 +60,7 @@
           name="postalCode"
           minlength="4"
           maxlength="4" value="<%= sessionData.postalCode %>"
-          required
-        />
+          required pattern="\d{1,4}" maxlength="13" onkeypress="return /[0-9]/i.test(event.key)" />
       </p>
       <p>
         <label for="province">Province</label>

@@ -6,6 +6,7 @@ const comissionerSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
+      set: (value) => value.toLowerCase(),
     },
     password: {
       type: String,
