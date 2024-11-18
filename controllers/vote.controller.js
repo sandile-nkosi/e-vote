@@ -2,6 +2,7 @@ const Candidate = require("../models/Candidate");
 const Voter = require("../models/Voter");
 const Vote = require("../models/Vote");
 const mongoose = require("mongoose");
+const pusher = require("../config/pusher");
 
 async function getVote(req, res, next) {
   try {
@@ -29,12 +30,8 @@ async function getCandidate(req, res, next) {
 
 async function vote(req, res, next) {
   const voterId = mongoose.Types.ObjectId.createFromHexString(res.locals.uid);
-  const nationalVote = mongoose.Types.ObjectId.createFromHexString(
-    req.params.id
-  );
-  const provincialVote = mongoose.Types.ObjectId.createFromHexString(
-    req.params.id
-  );
+  const nationalVote = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+  const provincialVote = mongoose.Types.ObjectId.createFromHexString(req.params.id);
   const voteType = req.body.voteType;
 
   if (!res.locals.isAuth) {
@@ -47,52 +44,43 @@ async function vote(req, res, next) {
     return res.redirect("/voter/vote");
   }
 
-  //update logged in voters vote
-
   try {
     const voter = await Voter.findById(voterId).exec();
-
-    //check if vote exists, create if does not
     const existingVote = await Vote.findOne({ voter: voterId }).exec();
 
     if (!existingVote) {
-      await Vote.create({
-        voter: voter._id,
-      });
+      await Vote.create({ voter: voter._id });
     }
 
     if (voteType === "nationalVote") {
       await Vote.updateOne({ voter: voterId }, { nationalVote: nationalVote });
-
-      await Candidate.findByIdAndUpdate(
-        nationalVote,
-        { $inc: { nationalVotes: 1 } },
-        { new: true } // This returns the updated document instead of the old one
-      );
-
+      await Candidate.findByIdAndUpdate(nationalVote, { $inc: { nationalVotes: 1 } }, { new: true });
       await Voter.updateOne({ _id: voterId }, { hasVotedNationally: true });
-
-      return res.status(201).redirect("/voter/vote");
     } else if (voteType === "provincialVote") {
-      await Vote.updateOne(
-        { voter: voterId },
-        { provincialVote: provincialVote }
-      );
-
-      await Candidate.findByIdAndUpdate(
-        provincialVote,
-        { $inc: { provincialVotes: 1 } },
-        { new: true } // This returns the updated document instead of the old one
-      );
-
+      await Vote.updateOne({ voter: voterId }, { provincialVote: provincialVote });
+      await Candidate.findByIdAndUpdate(provincialVote, { $inc: { provincialVotes: 1 } }, { new: true });
       await Voter.updateOne({ _id: voterId }, { hasVotedprovincially: true });
-
-      return res.status(201).redirect("/voter/vote");
     }
+
+    const votesTotal = await Vote.estimatedDocumentCount();
+    const candidates = await Candidate.find({});
+
+    // Send a Pusher event for each candidate with updated vote counts
+    for (const candidate of candidates) {
+      pusher.trigger("e-vote", "votes", {
+        votesTotal,
+        candidateId: candidate._id, // Unique ID for each candidate
+        nationalVotes: candidate.nationalVotes,
+        provincialVotes: candidate.provincialVotes
+      });
+    }
+
+    res.status(201).redirect("/voter/vote");
   } catch (error) {
     next(error);
   }
 }
+
 
 module.exports = {
   getVote,

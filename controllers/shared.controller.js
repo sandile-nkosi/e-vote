@@ -7,12 +7,7 @@ async function getIndex(req, res, next) {
     const votes = await Vote.find({});
     const votesTotal = await Vote.estimatedDocumentCount();
 
-
-
-
-
-
-    res.render("shared/index", { candidates, votes, votesTotal });
+    res.render("shared/index", { candidates, votes, votesTotal});
   } catch (error) {
     next(error);
   }
