@@ -90,7 +90,7 @@ function logout(req, res) {
 }
 
 //register
-async function register(req, res) {
+async function register(req, res, next) {
   let emailStatus;
   let existingVoter;
 
@@ -182,6 +182,7 @@ async function register(req, res) {
     }
   } catch (error) {
     next(error);
+    return;
   }
 }
 
