@@ -1,35 +1,22 @@
-.progress-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  font-family: Arial, sans-serif;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 30px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
+.modern-progress {
+  width: 200px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #f0f0f0;
+  border-radius: 10px;
   overflow: hidden;
-  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.5s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.modern-progress::-webkit-progress-bar {
+  background: #f0f0f0;
 }
 
-.progress-text {
-  color: white;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+.modern-progress::-webkit-progress-value {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  transition: width 0.5s ease;
 }
 
-.candidate-info {
-  margin-bottom: 10px;
-  font-size: 1.2em;
+.modern-progress::-moz-progress-bar {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
 }

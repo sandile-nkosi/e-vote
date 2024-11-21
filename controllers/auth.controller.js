@@ -175,6 +175,7 @@ async function register(req, res, next) {
       });
 
       if (voter) {
+        await Voter.updateOne({ _id: voter._id }, { isVerified: true });
         res.status(201).redirect("/api/voter/login");
       } else {
         res.status(400);

@@ -1,4 +1,15 @@
 const mongoose = require("mongoose");
+const provinces = [
+  "Eastern Cape",
+  "Free State",
+  "Gauteng",
+  "KwaZulu-Natal",
+  "Limpopo",
+  "Mpumalanga",
+  "Northern Cape",
+  "North West",
+  "Western Cape",
+];
 
 const voteSchema = mongoose.Schema(
   {
@@ -16,6 +27,10 @@ const voteSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       default: null,
       ref: "Candidate",
+    },
+    province: {
+      type: String,
+      enum: provinces,
     },
   },
   {

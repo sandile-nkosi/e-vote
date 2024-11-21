@@ -3,7 +3,10 @@
 </head>
 <body>
   <main>
-    <h1>All Candidates</h1>
+    <h1>Voter Details</h1>
+    <p>Name: <%= voter.firstName +" "+ voter.lastName %></p>
+    <p>Verified: <%= voter.isVerified %></p>
+    <h2>All Candidates</h2>
     <ul id="candidates-grid">
       <% for (const candidate of candidates) {%>
       <li>

@@ -30,8 +30,12 @@ async function getCandidate(req, res, next) {
 
 async function vote(req, res, next) {
   const voterId = mongoose.Types.ObjectId.createFromHexString(res.locals.uid);
-  const nationalVote = mongoose.Types.ObjectId.createFromHexString(req.params.id);
-  const provincialVote = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+  const nationalVote = mongoose.Types.ObjectId.createFromHexString(
+    req.params.id
+  );
+  const provincialVote = mongoose.Types.ObjectId.createFromHexString(
+    req.params.id
+  );
   const voteType = req.body.voteType;
 
   if (!res.locals.isAuth) {
@@ -54,11 +58,22 @@ async function vote(req, res, next) {
 
     if (voteType === "nationalVote") {
       await Vote.updateOne({ voter: voterId }, { nationalVote: nationalVote });
-      await Candidate.findByIdAndUpdate(nationalVote, { $inc: { nationalVotes: 1 } }, { new: true });
+      await Candidate.findByIdAndUpdate(
+        nationalVote,
+        { $inc: { nationalVotes: 1 } },
+        { new: true }
+      );
       await Voter.updateOne({ _id: voterId }, { hasVotedNationally: true });
     } else if (voteType === "provincialVote") {
-      await Vote.updateOne({ voter: voterId }, { provincialVote: provincialVote });
-      await Candidate.findByIdAndUpdate(provincialVote, { $inc: { provincialVotes: 1 } }, { new: true });
+      await Vote.updateOne(
+        { voter: voterId },
+        { provincialVote: provincialVote, province: voter.province }
+      );
+      await Candidate.findByIdAndUpdate(
+        provincialVote,
+        { $inc: { provincialVotes: 1 } },
+        { new: true }
+      );
       await Voter.updateOne({ _id: voterId }, { hasVotedprovincially: true });
     }
 
@@ -71,7 +86,7 @@ async function vote(req, res, next) {
         votesTotal,
         candidateId: candidate._id, // Unique ID for each candidate
         nationalVotes: candidate.nationalVotes,
-        provincialVotes: candidate.provincialVotes
+        provincialVotes: candidate.provincialVotes,
       });
     }
 
@@ -80,7 +95,6 @@ async function vote(req, res, next) {
     next(error);
   }
 }
-
 
 module.exports = {
   getVote,
